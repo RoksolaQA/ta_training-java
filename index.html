@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+</head>
+<body>
+    <h1>Main Page 1</h1>
+    <p>This is the main page.</p>
+    <!-- Ссылка на другую страницу -->
+    <p><a href="another-page.html">Go to Another Page</a></p>
+
+    <input type="text" placeholder="Main Page Input">
+
+    <!-- Shadow Root in Main Page -->
+    <div id="main-shadow-root"></div>
+
+    <!-- Iframe in Main Page -->
+    <iframe src="iframe.html" width="800" height="1000"></iframe>
+
+    <script>
+        // Create shadow root on the main page
+        const mainShadowRoot = document.getElementById('main-shadow-root').attachShadow({ mode: 'open' });
+
+        // Create content inside the shadow root
+        const mainShadowContent = document.createElement('div');
+        mainShadowContent.innerHTML = `
+            <h2> > Main Shadow Root 1.1</h2>
+            <p>This is inside the shadow root on the main page.</p>
+            <input type="text" placeholder="Main Shadow Root Input">
+        `;
+        
+        mainShadowRoot.appendChild(mainShadowContent);
+    </script>
+
+    <!-- Добавление нового Shadow Root в конце документа -->
+    <div id="extra-shadow-root"></div>
+    
+    <script>
+        // Create extra shadow root at the end of the document
+        const extraShadowRoot = document.getElementById('extra-shadow-root').attachShadow({ mode: 'open' });
+
+        // Create content inside the extra shadow root
+        const extraShadowContent = document.createElement('div');
+        extraShadowContent.innerHTML = `
+            <h2> > Extra Shadow Root</h2>
+            <p>This is inside the extra shadow root at the end of the main page.</p>
+            <input type="text" placeholder="Extra Shadow Root Input">
+
+            <!-- Вложенный iframe внутри extra shadow root -->
+            <iframe src="additional-nested-iframe.html" width="300" height="200"></iframe>
+        `;
+        
+        extraShadowRoot.appendChild(extraShadowContent);
+    </script>
+</body>
+</html>

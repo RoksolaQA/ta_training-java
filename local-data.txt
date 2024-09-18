@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local AJAX Loaded Page</title>
+</head>
+<body>
+    <h2>This content is loaded via AJAX</h2>
+    <p>Welcome to the dynamically loaded page! This page was fetched via an AJAX request.</p>
+
+    <!-- Shadow Root Section -->
+    <div id="shadow-root-container"></div>
+    
+    <script>
+        // Create a shadow root inside the container
+        const shadowRootContainer = document.getElementById('shadow-root-container').attachShadow({ mode: 'open' });
+
+        // Create and append content inside the shadow root
+        const shadowContent = document.createElement('div');
+        shadowContent.innerHTML = `
+            <h4>Shadow Root Section</h4>
+            <p>This content is inside a Shadow Root.</p>
+            <input type="text" placeholder="Input inside Shadow Root">
+        `;
+
+        shadowRootContainer.appendChild(shadowContent);
+    </script>
+
+    <!-- Iframe Section -->
+    <h4>Nested Iframe:</h4>
+    <iframe src="./iframe-content.html" width="400" height="200" style="border: 1px solid #ccc;"></iframe>
+
+</body>
+</html>

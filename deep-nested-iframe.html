@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Nested Iframe</title>
+</head>
+<body>
+    <h3> > > > > Deep Nested Iframe 1.2.1.1.1</h3>
+    <p>This is inside the deep nested iframe.</p>
+    <input type="text" placeholder="Deep Nested Iframe Input">
+ <!-- Button to trigger AJAX request -->
+    <button id="ajaxButton" style="background-color: #e0e0e0; color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">
+    Load Data via AJAX</button>
+
+    <!-- Block where AJAX data will be displayed -->
+    <div id="ajaxContent" style="margin-top: 20px;"></div>
+
+     <script>
+        // Function to handle button click and perform AJAX request
+        document.getElementById('ajaxButton').addEventListener('click', function() {
+            const xhr = new XMLHttpRequest();
+            // Specify the path to the local file in the same directory as this HTML file
+            xhr.open('GET', './local-data.txt', true);
+            
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Replace the entire content of the body with the response data
+                    document.body.innerHTML = `
+                        <h4>Data Loaded from Local File:</h4>
+                        <p>${xhr.responseText}</p>
+                    `;
+                } else {
+                    // Handle any errors during file loading
+                    document.getElementById('ajaxContent').innerHTML = 'Error loading data.';
+                }
+            };
+
+            xhr.onerror = function() {
+                document.getElementById('ajaxContent').innerHTML = 'Request failed.';
+            };
+
+            // Send the request
+            xhr.send();
+        });
+    </script>
+
+
+    <!-- Shadow Root in Deep Nested Iframe -->
+    <div id="deep-nested-shadow-root"></div>
+
+    <script>
+        // Create shadow root inside the deep nested iframe
+        const deepNestedShadowRoot = document.getElementById('deep-nested-shadow-root').attachShadow({ mode: 'open' });
+
+        // Create content inside the shadow root within the deep nested iframe
+        const deepNestedShadowContent = document.createElement('div');
+        deepNestedShadowContent.innerHTML = `
+            <h4> > > > > > Shadow Root in Deep Nested Iframe 1.2.1.1.1.1</h4>
+            <p>This is inside the shadow root within the deep nested iframe.</p>
+            <input type="text" placeholder="Shadow Root in Deep Nested Iframe Input">
+        `;
+        
+        deepNestedShadowRoot.appendChild(deepNestedShadowContent);
+    </script>
+</body>
+</html>

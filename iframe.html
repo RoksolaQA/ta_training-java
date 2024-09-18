@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe 1.2.</title>
+</head>
+<body>
+    <h2> > Iframe 1.2</h2>
+    <p>This is the first iframe.</p>
+    <input type="text" placeholder="Iframe 1 Input">
+
+    <!-- Shadow Root in Iframe 1 -->
+    <div id="iframe-shadow-root-1"></div>
+
+    <!-- Nested Iframe in Iframe 1 -->
+    <iframe src="nested-iframe.html" width="300" height="150"></iframe>
+
+    <script>
+        // Create shadow root inside the first iframe
+        const iframeShadowRoot1 = document.getElementById('iframe-shadow-root-1').attachShadow({ mode: 'open' });
+
+        // Create content inside the shadow root within the iframe
+        const iframeShadowContent1 = document.createElement('div');
+        iframeShadowContent1.innerHTML = `
+            <h3> > > Iframe Shadow Root 1.2.1</h3>
+            <p>This is inside the shadow root within the first iframe.</p>
+            <input type="text" placeholder="Iframe Shadow Root 1 Input">
+            <div id="nested-shadow-root-1"></div>
+        `;
+        
+        iframeShadowRoot1.appendChild(iframeShadowContent1);
+
+        // Create nested shadow root inside the first shadow root
+        const nestedShadowRoot1 = iframeShadowRoot1.querySelector('#nested-shadow-root-1').attachShadow({ mode: 'open' });
+
+        // Create content inside the nested shadow root within the first shadow root
+        const nestedShadowContent1 = document.createElement('div');
+        nestedShadowContent1.innerHTML = `
+            <h4> > > > Nested Shadow Root 1.2.1.1</h4>
+            <p>This is inside the nested shadow root within the first shadow root.</p>
+            <input type="text" placeholder="Nested Shadow Root 1.1 Input">
+            
+            <!-- New iframe with its own shadow root -->
+            <iframe src="deep-nested-iframe.html" width="500" height="250"></iframe>
+        `;
+        
+        nestedShadowRoot1.appendChild(nestedShadowContent1);
+    </script>
+
+    <!-- Новый текст и iframe перед вставкой дополнительных элементов -->
+
+    <p>This is an extra iframe nested inside Iframe 1.2.</p>
+    <iframe src="extra-nested-iframe.html" width="320" height="170"></iframe>
+
+</body>
+</html>

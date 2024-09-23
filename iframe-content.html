@@ -3,11 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe Content</title>
+    <title>Iframe Content with Shadow DOM</title>
 </head>
 <body>
     <h3>This is an Iframe</h3>
     <p>The content inside this iframe was loaded separately.</p>
     <input type="text" placeholder="Input in Iframe">
+
+    <div id="shadow-host"></div> <!-- Host element for shadow root -->
+
+    <script>
+        // Create a shadow root attached to the div
+        const host = document.getElementById('shadow-host');
+        const shadowRoot = host.attachShadow({ mode: 'open' });
+
+        // Add content inside the shadow root
+        const shadowContent = document.createElement('div');
+        shadowContent.innerHTML = `
+            <style>
+                p {
+                    color: blue;
+                }
+            </style>
+            <p>This content is inside the shadow DOM.</p>
+            <input type="text" placeholder="Input in Shadow DOM">
+        `;
+
+        shadowRoot.appendChild(shadowContent);
+    </script>
 </body>
 </html>

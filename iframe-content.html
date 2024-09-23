@@ -3,61 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe Content with Shadow DOM</title>
+    <title>Multiple Shadow Roots with Nested iframe</title>
 </head>
 <body>
-    <h3>This is an Iframe</h3>
-    <p>The content inside this iframe was loaded separately.</p>
-    <input type="text" placeholder="Input in Iframe">
+    <h1>Multiple Shadow Roots with Nested iframe Example</h1>
 
-    <div id="shadow-host"></div> <!-- Host element for shadow root -->
+    <!-- Первый Shadow Host -->
+    <div id="shadow-host-1"></div>
 
-    <script>
-        // Create a shadow root attached to the div
-        const host = document.getElementById('shadow-host');
-        const shadowRoot = host.attachShadow({ mode: 'open' });
-
-        // Add content inside the shadow root
-        const shadowContent = document.createElement('div');
-        shadowContent.innerHTML = `
-            <style>
-                p {
-                    color: blue;
-                    border: 2px solid black;
-                    padding: 10px;
-                    width: fit-content;
-                }
-            </style>
-            <p>This content is inside the shadow DOM.</p>
-            <input type="text" placeholder="Input in Shadow DOM">
-        `;
-
-        shadowRoot.appendChild(shadowContent);
-    </script>
-
-    <!-- Second Shadow Root -->
-    <div id="shadow-host-iframe"></div> <!-- Host element for second shadow root inside iframe -->
+    <!-- Второй Shadow Host -->
+    <div id="shadow-host-2"></div>
 
     <script>
-        // Create a second shadow root attached to the div
-        const hostIframe = document.getElementById('shadow-host-iframe');
-        const shadowRootIframe = hostIframe.attachShadow({ mode: 'open' });
+        // Создаем первый Shadow Root
+        const shadowHost1 = document.getElementById('shadow-host-1');
+        const shadowRoot1 = shadowHost1.attachShadow({ mode: 'open' });
 
-        // Add content inside the second shadow root
-        const shadowContentIframe = document.createElement('div');
-        shadowContentIframe.innerHTML = `
-            <style>
-                p {
-                    color: green;
-                    border: 2px solid red;
-                    padding: 10px;
-                    width: fit-content;
-                }
-            </style>
-            <p>This is the second Shadow DOM within an iframe.</p>
-        `;
+        // Создаем текстовый элемент внутри первого Shadow Root с зеленым цветом
+        const textElement1 = document.createElement('p');
+        textElement1.textContent = 'This is some text inside the first shadow root';
+        textElement1.style.border = '1px solid black';
+        textElement1.style.padding = '10px';
+        textElement1.style.color = 'green'; // Применяем зеленый цвет к тексту
+        shadowRoot1.appendChild(textElement1);
 
-        shadowRootIframe.appendChild(shadowContentIframe);
+        // Создаем Iframe внутри первого Shadow Root
+        const iframeElement = document.createElement('iframe');
+        iframeElement.id = 'nested-iframe';
+        iframeElement.src = 'about:blank';
+        iframeElement.width = '60';
+        iframeElement.height = '20';
+        shadowRoot1.appendChild(iframeElement);
+
+        // Добавляем текстовое содержимое внутрь iframe
+        iframeElement.onload = function() {
+            const iframeDoc = iframeElement.contentDocument || iframeElement.contentWindow.document;
+            iframeDoc.body.innerHTML = '<div style="border: 1px solid black; padding: 10px;">This is a nested iframe inside the first shadow root</div>';
+        };
+
+        // Создаем второй Shadow Root
+        const shadowHost2 = document.getElementById('shadow-host-2');
+        const shadowRoot2 = shadowHost2.attachShadow({ mode: 'open' });
+
+        // Добавляем текстовое содержимое во второй Shadow Root
+        const textElement2 = document.createElement('div');
+        textElement2.style.border = '1px solid black';
+        textElement2.style.padding = '10px';
+        textElement2.textContent = 'This is the second shadow root';
+        shadowRoot2.appendChild(textElement2);
     </script>
 </body>
 </html>

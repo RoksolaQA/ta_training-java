@@ -3,12 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Another Page</title>
+    <title>Another Page with Shadow DOM</title>
+    <script>
+        // Define a custom element with Shadow DOM
+        class MyCustomElement extends HTMLElement {
+            constructor() {
+                super();
+                const shadow = this.attachShadow({ mode: 'open' });
+                
+                // Create a wrapper div
+                const wrapper = document.createElement('div');
+                
+                // Create a paragraph element with text
+                const content = document.createElement('p');
+                content.textContent = "This text is inside Shadow DOM.";
+
+                // Create a style element to style the shadow DOM content
+                const style = document.createElement('style');
+                style.textContent = `
+                    p {
+                        color: red;  /* Change text color */
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                    div {
+                        background-color: lightblue;  /* Background color for wrapper */
+                        padding: 10px;
+                        border-radius: 5px;
+                    }
+                `;
+
+                // Append the style and content to the shadow root
+                shadow.appendChild(style);
+                wrapper.appendChild(content);
+                shadow.appendChild(wrapper);
+            }
+        }
+
+        // Register the custom element
+        customElements.define('my-custom-element', MyCustomElement);
+    </script>
 </head>
 <body>
     <h1>Another Page</h1>
     <p>This is another page, linked from various parts of the main content.</p>
     <input type="text" placeholder="Another Page Input">
     <p><a href="index.html">Go back to Main Page</a></p>
+
+    <!-- Insert the custom element with Shadow DOM -->
+    <my-custom-element></my-custom-element>
 </body>
 </html>

@@ -48,9 +48,38 @@
     <h1>Another Page</h1>
     <p>This is another page, linked from various parts of the main content.</p>
     <input type="text" placeholder="Another Page Input">
+    
+    <!-- Test Dropdown (Select Menu) -->
+    <label for="testDropdown">Choose an option:</label>
+    <select id="testDropdown">
+        <option value="">-- Select an option --</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+    </select>
+
     <p><a href="index.html">Go back to Main Page</a></p>
 
     <!-- Insert the custom element with Shadow DOM -->
     <my-custom-element></my-custom-element>
+
+    <script>
+        // Event listeners for dropdown
+        document.getElementById('testDropdown').addEventListener('focus', () => {
+            console.log('Dropdown focused');
+        });
+
+        document.getElementById('testDropdown').addEventListener('blur', () => {
+            console.log('Dropdown lost focus');
+        });
+
+        document.getElementById('testDropdown').addEventListener('change', (event) => {
+            console.log('Dropdown value changed to:', event.target.value);
+        });
+
+        document.getElementById('testDropdown').addEventListener('click', () => {
+            console.log('Dropdown clicked');
+        });
+    </script>
 </body>
 </html>

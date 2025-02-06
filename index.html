@@ -4,11 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
+    <style>
+        /* Стилізація Drag & Drop */
+        .drag-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .draggable {
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            text-align: center;
+            line-height: 100px;
+            cursor: grab;
+            border: 2px solid blue;
+        }
+
+        .drop-target {
+            width: 120px;
+            height: 120px;
+            background-color: lightgray;
+            text-align: center;
+            line-height: 120px;
+            border: 2px dashed gray;
+        }
+
+        .drop-target.drag-over {
+            background-color: lightgreen;
+            border-color: green;
+        }
+    </style>
 </head>
 <body>
     <h1>Main Page 1</h1>
     <p>This is the main page.</p>
-    <!-- Ссылка на другую страницу -->
+
     <p><a href="another-page.html">Go to Another Page</a></p>
 
     <input type="text" placeholder="Main Page Input">
@@ -34,25 +66,58 @@
         mainShadowRoot.appendChild(mainShadowContent);
     </script>
 
-    <!-- Добавление нового Shadow Root в конце документа -->
+    <!-- Extra Shadow Root -->
     <div id="extra-shadow-root"></div>
     
     <script>
-        // Create extra shadow root at the end of the document
         const extraShadowRoot = document.getElementById('extra-shadow-root').attachShadow({ mode: 'open' });
 
-        // Create content inside the extra shadow root
         const extraShadowContent = document.createElement('div');
         extraShadowContent.innerHTML = `
             <h2> > Extra Shadow Root</h2>
             <p>This is inside the extra shadow root at the end of the main page.</p>
             <input type="text" placeholder="Extra Shadow Root Input">
 
-            <!-- Вложенный iframe внутри extra shadow root -->
             <iframe src="additional-nested-iframe.html" width="300" height="200"></iframe>
         `;
         
         extraShadowRoot.appendChild(extraShadowContent);
     </script>
+
+    <!-- DRAG & DROP SECTION -->
+    <h2>Drag & Drop Test</h2>
+    <div class="drag-container">
+        <div id="draggable-item" class="draggable" draggable="true">Drag Me</div>
+        <div id="drop-target" class="drop-target">Drop Here</div>
+    </div>
+
+    <script>
+        const draggableItem = document.getElementById("draggable-item");
+        const dropTarget = document.getElementById("drop-target");
+
+        draggableItem.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("text", event.target.id);
+        });
+
+        dropTarget.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            dropTarget.classList.add("drag-over");
+        });
+
+        dropTarget.addEventListener("dragleave", () => {
+            dropTarget.classList.remove("drag-over");
+        });
+
+        dropTarget.addEventListener("drop", (event) => {
+            event.preventDefault();
+            const draggedElementId = event.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(draggedElementId);
+            dropTarget.appendChild(draggedElement);
+            draggedElement.style.cursor = "default";
+            dropTarget.classList.remove("drag-over");
+            alert("✅ Drag & Drop успішно виконано!");
+        });
+    </script>
+
 </body>
 </html>

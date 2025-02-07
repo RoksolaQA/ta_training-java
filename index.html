@@ -41,8 +41,28 @@
     <h1>Main Page 1</h1>
     <p>This is the main page.</p>
 
-    <p><a href="another-page.html">Go to Another Page</a></p
+    <p><a id="main-link" class="navigation-link" href="another-page.html">Go to Another Page</a></p
+                                                                                                    
+    <!-- Open link in a new tab -->
+    <p><a id="new-tab-link" class="navigation-link" href="another-page.html" target="_blank">Open link in the new tab</a></p>
 
+    <!-- Open link in a new window -->
+    <p><a id="new-window-link" class="navigation-link" href="another-page.html" onclick="openInNewWindow(event)">Open link in the new window</a></p>
+
+    <!-- Open link in a popup -->
+    <p><a id="popup-link" class="navigation-link" href="another-page.html" onclick="openInPopup(event)">Open link in a popup</a></p>
+
+    <script>
+        function openInNewWindow(event) {
+            event.preventDefault(); // Предотвращаем стандартный переход по ссылке
+            window.open(event.target.href, '_blank', 'width=800,height=600');
+        }
+
+        function openInPopup(event) {
+            event.preventDefault(); // Предотвращаем стандартный переход по ссылке
+            window.open(event.target.href, 'popupWindow', 'width=500,height=400,scrollbars=yes');
+        }
+    </script>
     <!-- Main input field -->
     <input type="text" placeholder="Main Page Input">
     

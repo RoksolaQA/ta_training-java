@@ -35,52 +35,7 @@
             background-color: lightgreen;
             border-color: green;
         }
-    </style>
-</head>
-<body>
-    <h1>Main Page 1</h1>
-    <p>This is the main page.</p>
-
-    <p><a id="main-link" class="navigation-link" href="another-page.html">Go to Another Page</a></p
-                                                                                                    
-    <!-- Open link in a new tab (Синий) -->
-    <p><a id="new-tab-link" class="navigation-link link-tab" href="another-page.html" target="_blank">Open link in the new tab</a></p>
-
-    <!-- Open link in a new window (Зеленый) -->
-    <p><a id="new-window-link" class="navigation-link link-window" href="another-page.html" onclick="openInNewWindow(event)">Open link in the new window</a></p>
-
-    <!-- Open link in a popup (Красный) -->
-    <p><a id="popup-link" class="navigation-link link-popup" href="another-page.html" onclick="openPopup(event)">Open link in a popup</a></p>
-
-    <!-- попап -->
-    <div id="popup-container">
-        <div id="popup-content">
-            <span id="popup-close">&times;</span>
-            <iframe id="popup-iframe" src="" width="500" height="300"></iframe>
-        </div>
-    </div>
-
-    <script>
-        function openInNewWindow(event) {
-            event.preventDefault();
-            window.open(event.target.href, '_blank', 'width=800,height=600');
-        }
-
-        function openPopup(event) {
-            event.preventDefault();
-            const popupContainer = document.getElementById("popup-container");
-            const popupIframe = document.getElementById("popup-iframe");
-            popupIframe.src = event.target.href;
-            popupContainer.style.display = "flex";
-        }
-
-        document.getElementById("popup-close").addEventListener("click", function() {
-            document.getElementById("popup-container").style.display = "none";
-        });
-    </script>
-
-    <style>
-        /* Основные стили */
+            /* Основные стили */
         .navigation-link {
             font-size: 18px;
             text-decoration: none;
@@ -126,6 +81,48 @@
             cursor: pointer;
         }
     </style>
+</head>
+<body>
+    <h1>Main Page 1</h1>
+    <p>This is the main page.</p>
+
+    <p><a id="main-link" class="navigation-link" href="another-page.html">Go to Another Page</a></p
+                                                                                                    
+    <!-- Open link in a new tab (Синий) -->
+    <p><a id="new-tab-link" class="navigation-link link-tab" href="another-page.html" target="_blank">Open link in the new tab</a></p>
+
+    <!-- Open link in a new window (Зеленый) -->
+    <p><a id="new-window-link" class="navigation-link link-window" href="another-page.html" onclick="openInNewWindow(event)">Open link in the new window</a></p>
+
+    <!-- Open link in a popup (Красный) -->
+    <p><a id="popup-link" class="navigation-link link-popup" href="another-page.html" onclick="openPopup(event)">Open link in a popup</a></p>
+
+    <!-- попап -->
+    <div id="popup-container">
+        <div id="popup-content">
+            <span id="popup-close">&times;</span>
+            <iframe id="popup-iframe" src="" width="500" height="300"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openInNewWindow(event) {
+            event.preventDefault();
+            window.open(event.target.href, '_blank', 'width=800,height=600');
+        }
+
+        function openPopup(event) {
+            event.preventDefault();
+            const popupContainer = document.getElementById("popup-container");
+            const popupIframe = document.getElementById("popup-iframe");
+            popupIframe.src = event.target.href;
+            popupContainer.style.display = "flex";
+        }
+
+        document.getElementById("popup-close").addEventListener("click", function() {
+            document.getElementById("popup-container").style.display = "none";
+        });
+    </script>
     
     <!-- Main input field -->
     <input type="text" placeholder="Main Page Input">

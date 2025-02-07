@@ -104,25 +104,6 @@
             <iframe id="popup-iframe" src="" width="500" height="300"></iframe>
         </div>
     </div>
-
-    <script>
-        function openInNewWindow(event) {
-            event.preventDefault();
-            window.open(event.target.href, '_blank', 'width=800,height=600');
-        }
-
-        function openPopup(event) {
-            event.preventDefault();
-            const popupContainer = document.getElementById("popup-container");
-            const popupIframe = document.getElementById("popup-iframe");
-            popupIframe.src = event.target.href;
-            popupContainer.style.display = "flex";
-        }
-
-        document.getElementById("popup-close").addEventListener("click", function() {
-            document.getElementById("popup-container").style.display = "none";
-        });
-    </script>
     
     <!-- Main input field -->
     <input type="text" placeholder="Main Page Input">
@@ -198,6 +179,25 @@
             draggedElement.style.cursor = "default";
             dropTarget.classList.remove("drag-over");
             alert("✅ Drag & Drop успішно виконано!");
+        });
+    </script>
+    
+    <script>
+        function openInNewWindow(event) {
+            event.preventDefault();
+            window.open(event.target.href, '_blank', 'width=800,height=600');
+        }
+
+        function openPopup(event) {
+            event.preventDefault();
+            const popupContainer = document.getElementById("popup-container");
+            const popupIframe = document.getElementById("popup-iframe");
+            popupIframe.src = event.target.href;
+            popupContainer.style.display = "flex";
+        }
+
+        document.getElementById("popup-close").addEventListener("click", function() {
+            document.getElementById("popup-container").style.display = "none";
         });
     </script>
 

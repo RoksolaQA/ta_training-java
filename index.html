@@ -98,12 +98,16 @@
     <p><a id="popup-link" class="navigation-link link-popup" href="another-page.html" onclick="openPopup(event)">Open link in a popup</a></p>
 
     <!-- попап -->
-    <div id="popup-container">
+ <div id="popup-container">
         <div id="popup-content">
             <span id="popup-close">&times;</span>
-            <iframe id="popup-iframe" src="" width="500" height="300"></iframe>
+            <div id="popup-body">
+                <h2>Popup Window</h2>
+                <p>This is a simple modal popup!</p>
+            </div>
         </div>
     </div>
+
     
     <!-- Main input field -->
     <input type="text" placeholder="Main Page Input">
@@ -191,8 +195,15 @@
         function openPopup(event) {
             event.preventDefault();
             const popupContainer = document.getElementById("popup-container");
-            const popupIframe = document.getElementById("popup-iframe");
-            popupIframe.src = event.target.href;
+            const popupBody = document.getElementById("popup-body");
+
+            // Додаємо новий контент у модальне вікно
+            popupBody.innerHTML = `
+                <h2>Popup Window</h2>
+                <p>Content loaded from: <strong>${event.target.href}</strong></p>
+                <p>This is a simple modal popup without iframe!</p>
+            `;
+
             popupContainer.style.display = "flex";
         }
 

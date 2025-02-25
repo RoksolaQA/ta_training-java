@@ -103,11 +103,27 @@
         #custom-context-menu ul li:hover {
             background-color: #f0f0f0;
         }
+
+          /* Стилі для перевірки подвійного кліку */
+        #double-click-box {
+            width: 150px;
+            height: 100px;
+            background-color: lightcoral;
+            text-align: center;
+            line-height: 100px;
+            border: 2px solid darkred;
+            margin-top: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>Main Page 1</h1>
     <p>This is the main page.</p>
+
+      <!-- Елемент для перевірки подвійного кліку -->
+    <div id="double-click-box">Double Click Me</div>
+    
  <!-- Контекстне меню -->
     <div id="custom-context-menu">
         <ul>
@@ -264,6 +280,12 @@
 
         document.getElementById("popup-close").addEventListener("click", function() {
             document.getElementById("popup-container").style.display = "none";
+        });
+
+          // Обробка подвійного кліку
+        document.getElementById("double-click-box").addEventListener("dblclick", function() {
+            this.style.backgroundColor = "yellow";
+            this.textContent = "Double Clicked!";
         });
     </script>
 

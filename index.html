@@ -106,7 +106,7 @@
 
           /* Стилі для перевірки подвійного кліку */
         #double-click-box {
-            width: 80px;
+            width: 100px;
             height: 40px;
             background-color: lightcoral;
             text-align: center;
@@ -128,11 +128,11 @@
     </style>
 </head>
 <body>
-    <h1>Main Page 1</h1>
+    <h1 id="context-menu-target">Main Page 1</h1>
     <p>This is the main page.</p>
 
       <!-- Елемент для перевірки подвійного кліку -->
-    <div id="double-click-box">Double Click Me</div>
+    <div id="double-click-box">Double Click</div>
     
  <!-- Контекстне меню -->
     <div id="custom-context-menu">
@@ -285,9 +285,10 @@
             this.textContent = "Double Clicked!";
         });
 
-            const contextMenu = document.getElementById("custom-context-menu");
+        const contextMenu = document.getElementById("custom-context-menu");
+        const targetElement = document.getElementById("context-menu-target");
         
-        document.addEventListener("contextmenu", function(event) {
+        targetElement.addEventListener("contextmenu", function(event) {
             event.preventDefault(); // Відключаємо стандартне контекстне меню
             contextMenu.style.top = `${event.pageY}px`;
             contextMenu.style.left = `${event.pageX}px`;

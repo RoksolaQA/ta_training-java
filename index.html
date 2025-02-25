@@ -80,12 +80,58 @@
             font-size: 20px;
             cursor: pointer;
         }
+
+        /* Стилізація контекстного меню */
+        #custom-context-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            padding: 5px 0;
+        }
+        #custom-context-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        #custom-context-menu ul li {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        #custom-context-menu ul li:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <h1>Main Page 1</h1>
     <p>This is the main page.</p>
+ <!-- Контекстне меню -->
+    <div id="custom-context-menu">
+        <ul>
+            <li onclick="alert('Option 1 selected!')">Option 1</li>
+            <li onclick="alert('Option 2 selected!')">Option 2</li>
+            <li onclick="alert('Option 3 selected!')">Option 3</li>
+        </ul>
+    </div>
 
+    <script>
+        const contextMenu = document.getElementById("custom-context-menu");
+        
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault(); // Відключаємо стандартне контекстне меню
+            contextMenu.style.top = `${event.pageY}px`;
+            contextMenu.style.left = `${event.pageX}px`;
+            contextMenu.style.display = "block";
+        });
+        
+        document.addEventListener("click", function() {
+            contextMenu.style.display = "none"; // При кліку приховуємо меню
+        });
+    </script>
+    
     <p><a id="main-link" class="navigation-link" href="another-page.html">Go to Another Page</a></p
                                                                                                     
     <!-- Open link in a new tab (Синий) -->

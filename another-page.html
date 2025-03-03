@@ -73,6 +73,15 @@
     </select>
 
     <p><a href="index.html">Go back to Main Page</a></p>
+<h1>Test Login</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username">
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+    
+    <button onclick="loginWithTestPlatform()">Login with Test Platform</button>
+    <p id="login-status">🔴 Not logged in</p>
 
     <!-- Insert the custom element with Shadow DOM -->
     <my-custom-element></my-custom-element>
@@ -94,6 +103,18 @@
         document.getElementById('testDropdown').addEventListener('click', () => {
             console.log('Dropdown clicked');
         });
+
+         function loginWithTestPlatform() {
+            const loginUrl = "https://practicetestautomation.com/practice-test-login/";
+            const loginWindow = window.open(loginUrl, "_blank", "width=800,height=600");
+
+            const checkLogin = setInterval(() => {
+                if (loginWindow.closed) {
+                    clearInterval(checkLogin);
+                    document.getElementById("login-status").innerText = "✅ Logged in successfully!";
+                }
+            }, 1000);
+        }
     </script>
 </body>
 </html>

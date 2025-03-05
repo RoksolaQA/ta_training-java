@@ -247,38 +247,54 @@
 
     <script>
     const draggableItem = document.getElementById("draggable-item");
-    const dropTarget = document.getElementById("drop-target");
+const dropTarget = document.getElementById("drop-target");
 
-    draggableItem.addEventListener("dragstart", (event) => {
-        event.dataTransfer.setData("text", event.target.id);
-    });
+// Додаємо новий блок для виводу результатів
+const resultBox = document.createElement("div");
+resultBox.id = "drag-drop-result";
+resultBox.style.marginTop = "10px";
+resultBox.style.padding = "10px";
+resultBox.style.border = "1px solid gray";
+resultBox.style.display = "none"; // Спочатку ховаємо блок
+dropTarget.insertAdjacentElement("afterend", resultBox);
 
-    dropTarget.addEventListener("dragover", (event) => {
-        event.preventDefault();
-        dropTarget.classList.add("drag-over");
-    });
+draggableItem.addEventListener("dragstart", (event) => {
+    event.dataTransfer.setData("text", event.target.id);
+});
 
-    dropTarget.addEventListener("dragleave", () => {
-        dropTarget.classList.remove("drag-over");
-    });
+dropTarget.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    dropTarget.classList.add("drag-over");
+});
 
-    dropTarget.addEventListener("drop", (event) => {
-        event.preventDefault();
-        const draggedElementId = event.dataTransfer.getData("text");
-        const draggedElement = document.getElementById(draggedElementId);
-        dropTarget.appendChild(draggedElement);
-        draggedElement.style.cursor = "default";
-        dropTarget.classList.remove("drag-over");
+dropTarget.addEventListener("dragleave", () => {
+    dropTarget.classList.remove("drag-over");
+});
 
-        // Додаємо prompt() для введення тексту
-        const userText = prompt("✅ Drag & Drop успішно виконано! Введіть текст:");
-        
-        if (userText !== null && userText.trim() !== "") {
-            dropTarget.innerHTML = `<strong>${userText}</strong>`;
-        } else {
-            alert("❌ Ви не ввели текст!");
-        }
-    });
+dropTarget.addEventListener("drop", (event) => {
+    event.preventDefault();
+    const draggedElementId = event.dataTransfer.getData("text");
+    const draggedElement = document.getElementById(draggedElementId);
+    dropTarget.appendChild(draggedElement);
+    draggedElement.style.cursor = "default";
+    dropTarget.classList.remove("drag-over");
+
+    // Відкриваємо prompt() для введення тексту
+    const userText = prompt("✅ Drag & Drop успішно виконано! Введіть текст:");
+
+    let message = "";
+    if (userText !== null && userText.trim() !== "") {
+        message = `✔️ Ви ввели: <strong>${userText}</strong>`;
+        dropTarget.innerHTML = `<strong>${userText}</strong>`;
+    } else {
+        message = "❌ Ви не ввели текст або натиснули 'Скасувати'";
+    }
+
+    // Виводимо результат у новий блок
+    resultBox.innerHTML = `<p><strong>Результат Drag & Drop:</strong></p><p>${message}</p>`;
+    resultBox.style.display = "block"; // Показуємо блок з результатом
+});
+
 </script>
 
     

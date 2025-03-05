@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <style>
+    .input-container {
+    display: flex; /* Вирівнюємо елементи в ряд */
+    gap: 10px; /* Відстань між інпутами */
+    }
+
+    input, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
+
+    textarea {
+    resize: vertical; /* Дозволяє змінювати висоту */
+    height: 100px; /* Початкова висота */
+    width: 200px; /* Ширина */
+    }
+        
         /* Стилізація Drag & Drop */
         .drag-container {
             display: flex;
@@ -165,9 +183,15 @@
         </div>
     </div>
 
-    
-    <!-- Main input field -->
+<!-- Контейнер для інпутів -->
+<div class="input-container">
+    <!-- Звичайне однорядкове поле -->
     <input type="text" placeholder="Main Page Input">
+    
+    <!-- Багаторядкове поле (textarea) -->
+    <textarea placeholder="Multi-line Input"></textarea>
+</div>
+
     
     <!-- Shadow Root in Main Page -->
     <div id="main-shadow-root"></div>

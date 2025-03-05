@@ -284,10 +284,9 @@ dropTarget.addEventListener("drop", (event) => {
 
     let message = "";
     if (userText !== null && userText.trim() !== "") {
-        message = `✔️ Ви ввели: <strong>${userText}</strong>`;
-        dropTarget.innerHTML = `<strong>${userText}</strong>`;
+        message = `✔️ Entered text in promt: <strong>${userText}</strong>`;
     } else {
-        message = "❌ Ви не ввели текст або натиснули 'Скасувати'";
+        message = "❌ Missed text or Cancel is pressed'";
     }
 
     // Виводимо результат у новий блок

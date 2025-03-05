@@ -4,25 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
+   
     <style>
     .input-container {
-    display: flex; /* Вирівнюємо елементи в ряд */
+    display: flex; /* Розташування в рядок */
     gap: 10px; /* Відстань між інпутами */
+    align-items: center; /* Вирівнювання по центру */
     }
 
-    input, textarea {
+    .input-box {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 200px; /* Фіксована ширина */
+    height: 40px; /* Висота для однорядкового інпуту */
+    box-sizing: border-box; /* Щоб padding не розширював блок */
     }
 
-    textarea {
-    resize: vertical; /* Дозволяє змінювати висоту */
-    height: 100px; /* Початкова висота */
-    width: 200px; /* Ширина */
-    }
-        
+    /* Налаштування для textarea */
+    .textarea-limited {
+    height: 40px; /* Робимо висоту такою ж, як в інпуту */
+    resize: none; /* Забороняємо зміну розміру вручну */
+    overflow: hidden; /* Ховаємо скролл */
+    line-height: 20px; /* Висота рядка */
+    max-height: 40px; /* Два рядки = 40px */
+        }
         /* Стилізація Drag & Drop */
         .drag-container {
             display: flex;
@@ -185,13 +192,12 @@
 
 <!-- Контейнер для інпутів -->
 <div class="input-container">
-    <!-- Звичайне однорядкове поле -->
-    <input type="text" placeholder="Main Page Input">
-    
-    <!-- Багаторядкове поле (textarea) -->
-    <textarea placeholder="Multi-line Input"></textarea>
-</div>
+    <!-- Однорядкове поле -->
+    <input type="text" placeholder="Main Page Input" class="input-box">
 
+    <!-- Багаторядкове поле з обмеженням на 2 рядки -->
+    <textarea placeholder="Multi-line Input" class="input-box textarea-limited"></textarea>
+</div>
     
     <!-- Shadow Root in Main Page -->
     <div id="main-shadow-root"></div>

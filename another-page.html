@@ -78,6 +78,10 @@
     <button onclick="loginWithTestPlatform()">Login with Test Platform</button>
     <p id="login-status">🔴 Not logged in</p>
 
+
+    <button id="showUserAgentBtn" onclick="showUserAgent()">Show User-Agent</button>
+    <div id="userAgentDisplay"></div>
+
     <!-- Insert the custom element with Shadow DOM -->
     <my-custom-element></my-custom-element>
 
@@ -110,6 +114,11 @@
                 }
             }, 1000);
         }
+
+        function showUserAgent() {
+  const ua = navigator.userAgent;  // зчитуємо поточний User-Agent
+  document.getElementById('userAgentDisplay').innerText = ua; 
+}
     </script>
 </body>
 </html>

@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Another Page with Shadow DOM</title>
+      <style>
+    .cookie-container {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 400px;
+    }
+    .cookie-container select, 
+    .cookie-container input, 
+    .cookie-container button {
+      margin-bottom: 5px;
+      display: block;
+    }
+  </style>
     <script>
         // Define a custom element with Shadow DOM
         class MyCustomElement extends HTMLElement {
@@ -63,14 +76,21 @@
     <input type="file" id="fileInput">
 
     
-    <!-- Test Dropdown (Select Menu) -->
-    <label for="testDropdown">Choose an option:</label>
-    <select id="testDropdown">
-        <option value="">-- Select an option --</option>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
+  <div class="cookie-container">
+    <label>Cookie Key:</label>
+    <select id="cookieKeySelect">
+      <option value="myCookie1">Option 1</option>
+      <option value="myCookie2">Option 2</option>
+      <option value="userPreference">Option 3</option>
     </select>
+
+    <label>Cookie Value:</label>
+    <input type="text" id="cookieValueInput" placeholder="Enter cookie value" />
+
+    <button onclick="saveCookie()">Save</button>
+    <button onclick="showCookie()">Show</button>
+    <button onclick="clearCookie()">Clear</button>
+  </div>
 
     <p><a href="index.html">Go back to Main Page</a></p>
 <h1>Test Login</h1>
@@ -119,6 +139,53 @@
   const ua = navigator.userAgent;  // зчитуємо поточний User-Agent
   document.getElementById('userAgentDisplay').innerText = ua; 
 }
+
+
+            // Натискання "Save": зберігаємо cookie з обраним key і введеним value
+    function saveCookie() {
+      const key = document.getElementById('cookieKeySelect').value;
+      const value = document.getElementById('cookieValueInput').value;
+
+      // Встановлюємо cookie на 1 день
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 1);
+      document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value)
+        + "; expires=" + expires.toUTCString() + "; path=/";
+    }
+
+    // Натискання "Show": показуємо користувачеві поточне значення cookie
+    function showCookie() {
+      const key = document.getElementById('cookieKeySelect').value;
+      const cookieVal = getCookieValue(key);
+
+      if (cookieVal !== null) {
+        alert('Cookie "' + key + '" = ' + cookieVal);
+      } else {
+        alert('Cookie "' + key + '" not found.');
+      }
+    }
+
+    // Натискання "Clear": видаляємо cookie
+    function clearCookie() {
+      const key = document.getElementById('cookieKeySelect').value;
+      // Для видалення куки встановлюємо "минулий" expires
+      const expires = new Date(0);
+      document.cookie = encodeURIComponent(key) + "=; expires=" + expires.toUTCString() + "; path=/";
+      alert('Cookie "' + key + '" cleared.');
+    }
+
+    // Допоміжна ф-ція для отримання значення cookie за ключем
+    function getCookieValue(name) {
+      const decodedCookies = decodeURIComponent(document.cookie);
+      const cookiesArr = decodedCookies.split('; ');
+      for (let c of cookiesArr) {
+        const [cookieKey, cookieVal] = c.split('=');
+        if (cookieKey === name) {
+          return cookieVal;
+        }
+      }
+      return null;
+    }
     </script>
 </body>
 </html>

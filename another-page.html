@@ -4,29 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Another Page with Shadow DOM</title>
-      <style>
-   /* Стилі для нашого контейнера з куками */
+     <style>
+    .flex-row {
+      display: flex;
+      gap: 20px; /* відступ між блоками */
+      flex-wrap: wrap; /* при вузькому екрані блоки перелаштуються вниз */
+      margin: 20px 0;
+    }
+    /* Блок куків */
     .cookie-container {
       border: 1px solid #ccc;
       padding: 5px;
-      width: 300px;
-      margin: 20px 5px 20px 5px ;
+      width: 280px;
+      box-sizing: border-box;
     }
-
     .cookie-container input,
     .cookie-container select,
     .cookie-container button {
-     width: 100%;
-     box-sizing: border-box;
+      width: 100%;
+      box-sizing: border-box;
       margin-bottom: 8px;
     }
-
     #cookieMessage {
       margin-top: 5px;
       font-weight: bold;
       color: blue;
     }
 
+    /* Блок чекбоксів */
+    .items-list {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 280px;
+      box-sizing: border-box;
+    }
+    .items-list h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .items-list ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .items-list li {
+      margin: 5px 0;
+    }
+
+    /* Блок для відображення вибраних пунктів поруч */
+    .selected-container {
+      border: 1px solid #333;
+      padding: 10px;
+      width: 280px;
+      box-sizing: border-box;
+      display: none; /* ховаємо за замовчуванням */
+    }
+    .selected-container h3 {
+      margin-top: 0;
+    }
   </style>
     <script>
         // Define a custom element with Shadow DOM
@@ -85,8 +120,10 @@
     <!-- Просте поле для завантаження файлу -->
     <label for="fileInput">Upload a file:</label>
     <input type="file" id="fileInput">
-
- <div class="cookie-container">
+  <!-- Flex-контейнер, у якому три колонки: cookie, checkboxes, selected items -->
+  <div class="flex-row">
+          <!-- 1) Блок куків -->
+  <div class="cookie-container">
 
     <!-- Select з порожнім (або "Select key") варіантом і ще парою опцій -->
     <label>Cookie Key:</label>
@@ -107,7 +144,34 @@
     <div id="cookieMessage"></div>
   </div>
 
-    <p><a href="index.html">Go back to Main Page</a></p>
+      <!-- 2) Блок зі списком чекбоксів -->
+    <div class="items-list">
+      <h2>Select items</h2>
+      <ul>
+        <li>
+          <input type="checkbox" class="item-checkbox" id="item1" value="Rondel Zero Champagne" />
+          <label for="item1">Rondel Zero Champagne</label>
+        </li>
+        <li>
+          <input type="checkbox" class="item-checkbox" id="item2" value="Sherlock Secrets Tea" />
+          <label for="item2">Sherlock Secrets Tea</label>
+        </li>
+        <li>
+          <input type="checkbox" class="item-checkbox" id="item3" value="MacCoffee 3in1" />
+          <label for="item3">MacCoffee 3in1</label>
+        </li>
+      </ul>
+      <button onclick="addSelectedItems()">Add Selected</button>
+    </div>
+
+    <!-- 3) Блок із вибраними пунктами (виводиться поруч) -->
+    <div class="selected-container" id="selectedContainer">
+      <h3>Selected Items:</h3>
+      <ul id="selectedItems"></ul>
+      <button onclick="closeSelectedList()">Close</button>
+    </div>
+  </div>
+    
 <h1>Test Login</h1>
 
     <button onclick="loginWithTestPlatform()">Login with Test Platform</button>
@@ -120,6 +184,8 @@
     <!-- Insert the custom element with Shadow DOM -->
     <my-custom-element></my-custom-element>
 
+    <p><a href="index.html">Go back to Main Page</a></p>
+    
     <script>
         // Event listeners for dropdown
         document.getElementById('testDropdown').addEventListener('focus', () => {
@@ -150,12 +216,13 @@
             }, 1000);
         }
 
+         // ============== Show User-Agent ==============
         function showUserAgent() {
   const ua = navigator.userAgent;  // зчитуємо поточний User-Agent
   document.getElementById('userAgentDisplay').innerText = ua; 
 }
 
-
+// ============== Cookies (Save / Show / Clear) ==============
     function saveCookie() {
       const key = document.getElementById('cookieKeySelect').value;
       const value = document.getElementById('cookieValueInput').value.trim();
@@ -225,6 +292,32 @@
         }
       }
       return null;
+    }
+
+        // ============== Список із чекбоксами ==============
+    function addSelectedItems() {
+      const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+      const selectedList = document.getElementById('selectedItems');
+      const selectedContainer = document.getElementById('selectedContainer');
+
+      // Очищаємо попередній список
+      selectedList.innerHTML = '';
+
+      if (checkboxes.length === 0) {
+        selectedList.innerHTML = '<li>❌ No items selected.</li>';
+      } else {
+        checkboxes.forEach((cb) => {
+          const li = document.createElement('li');
+          li.textContent = cb.value;
+          selectedList.appendChild(li);
+        });
+      }
+      // Показуємо блок (замість "модалки")
+      selectedContainer.style.display = 'block';
+    }
+
+    function closeSelectedList() {
+      document.getElementById('selectedContainer').style.display = 'none';
     }
     </script>
 </body>

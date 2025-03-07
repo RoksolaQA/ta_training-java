@@ -8,20 +8,17 @@
    /* Стилі для нашого контейнера з куками */
     .cookie-container {
       border: 1px solid #ccc;
-      padding: 10px;
+      padding: 5px;
       width: 300px;
-
-      /* Вирівнюємо праворуч: */
-      float: right;
-      margin: 0 0 20px 20px; /* Трохи відступів зліва та знизу */
+      margin: 20px 5px 20px 5px ;
     }
 
-    .cookie-container select,
     .cookie-container input,
+    .cookie-container select,
     .cookie-container button {
-      display: block;
+     width: 100%;
+     box-sizing: border-box;
       margin-bottom: 8px;
-      width: 100%;
     }
 
     #cookieMessage {
@@ -29,6 +26,7 @@
       font-weight: bold;
       color: blue;
     }
+
   </style>
     <script>
         // Define a custom element with Shadow DOM
@@ -89,7 +87,6 @@
     <input type="file" id="fileInput">
 
  <div class="cookie-container">
-    <h3>Cookie Manager</h3>
 
     <!-- Select з порожнім (або "Select key") варіантом і ще парою опцій -->
     <label>Cookie Key:</label>

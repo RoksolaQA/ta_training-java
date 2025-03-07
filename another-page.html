@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Another Page with Shadow DOM</title>
       <style>
+   /* Стилі для нашого контейнера з куками */
     .cookie-container {
       border: 1px solid #ccc;
       padding: 10px;
-      width: 400px;
+      width: 300px;
+
+      /* Вирівнюємо праворуч: */
+      float: right;
+      margin: 0 0 20px 20px; /* Трохи відступів зліва та знизу */
     }
-    .cookie-container select, 
-    .cookie-container input, 
+
+    .cookie-container select,
+    .cookie-container input,
     .cookie-container button {
-      margin-bottom: 5px;
       display: block;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+
+    #cookieMessage {
+      margin-top: 5px;
+      font-weight: bold;
+      color: blue;
     }
   </style>
     <script>
@@ -75,21 +88,26 @@
     <label for="fileInput">Upload a file:</label>
     <input type="file" id="fileInput">
 
-    
-  <div class="cookie-container">
+ <div class="cookie-container">
+    <h3>Cookie Manager</h3>
+
+    <!-- Select з порожнім (або "Select key") варіантом і ще парою опцій -->
     <label>Cookie Key:</label>
     <select id="cookieKeySelect">
-      <option value="myCookie1">Option 1</option>
-      <option value="myCookie2">Option 2</option>
-      <option value="userPreference">Option 3</option>
+      <option value="">-- Select Key --</option>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+      <option value="option3">Option 3</option>
     </select>
 
     <label>Cookie Value:</label>
     <input type="text" id="cookieValueInput" placeholder="Enter cookie value" />
 
-    <button onclick="saveCookie()">Save</button>
-    <button onclick="showCookie()">Show</button>
-    <button onclick="clearCookie()">Clear</button>
+    <button id="btnSave" onclick="saveCookie()">Save</button>
+    <button id="btnShow" onclick="showCookie()">Show</button>
+    <button id="btnClear" onclick="clearCookie()">Clear</button>
+
+    <div id="cookieMessage"></div>
   </div>
 
     <p><a href="index.html">Go back to Main Page</a></p>
@@ -141,43 +159,68 @@
 }
 
 
-            // Натискання "Save": зберігаємо cookie з обраним key і введеним value
     function saveCookie() {
       const key = document.getElementById('cookieKeySelect').value;
-      const value = document.getElementById('cookieValueInput').value;
+      const value = document.getElementById('cookieValueInput').value.trim();
 
-      // Встановлюємо cookie на 1 день
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 1);
-      document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value)
-        + "; expires=" + expires.toUTCString() + "; path=/";
+      const msg = document.getElementById('cookieMessage');
+
+      if (!key) {
+        msg.textContent = '❌ Please select a cookie key.';
+        return;
+      }
+      if (!value) {
+        msg.textContent = '❌ Cookie value is empty.';
+        return;
+      }
+
+      setCookie(key, value, 1);
+      msg.textContent = `✅ Cookie "${key}" saved with value: ${value}`;
     }
 
-    // Натискання "Show": показуємо користувачеві поточне значення cookie
     function showCookie() {
       const key = document.getElementById('cookieKeySelect').value;
-      const cookieVal = getCookieValue(key);
+      const msg = document.getElementById('cookieMessage');
 
+      if (!key) {
+        msg.textContent = '❌ Please select a cookie key.';
+        return;
+      }
+
+      const cookieVal = getCookie(key);
       if (cookieVal !== null) {
-        alert('Cookie "' + key + '" = ' + cookieVal);
+        msg.textContent = `🔎 Cookie "${key}": ${cookieVal}`;
       } else {
-        alert('Cookie "' + key + '" not found.');
+        msg.textContent = `❌ Cookie "${key}" not found.`;
       }
     }
 
-    // Натискання "Clear": видаляємо cookie
     function clearCookie() {
       const key = document.getElementById('cookieKeySelect').value;
-      // Для видалення куки встановлюємо "минулий" expires
+      const msg = document.getElementById('cookieMessage');
+
+      if (!key) {
+        msg.textContent = '❌ Please select a cookie key.';
+        return;
+      }
+      // Видаляємо cookie (ставимо час життя в минуле)
       const expires = new Date(0);
       document.cookie = encodeURIComponent(key) + "=; expires=" + expires.toUTCString() + "; path=/";
-      alert('Cookie "' + key + '" cleared.');
+
+      msg.textContent = `🗑️ Cookie "${key}" has been cleared.`;
     }
 
-    // Допоміжна ф-ція для отримання значення cookie за ключем
-    function getCookieValue(name) {
+    /* Стандартні функції для set/get cookie */
+    function setCookie(name, value, days) {
+      const expires = new Date();
+      expires.setDate(expires.getDate() + days);
+      document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) 
+        + "; expires=" + expires.toUTCString() + "; path=/";
+    }
+
+    function getCookie(name) {
       const decodedCookies = decodeURIComponent(document.cookie);
-      const cookiesArr = decodedCookies.split('; ');
+      const cookiesArr = decodedCookies.split("; ");
       for (let c of cookiesArr) {
         const [cookieKey, cookieVal] = c.split('=');
         if (cookieKey === name) {
